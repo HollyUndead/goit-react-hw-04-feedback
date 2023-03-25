@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 
-export const FeedbackOptions = ({ ...props }) => {
-  const { increseFeedback } = props;
+import { FeedbackContext } from 'components/App';
+import { useContext } from 'react';
+
+export const FeedbackOptions = () => {
+  const func = useContext(FeedbackContext);
+  const { increseFeedback } = func;
   return (
     <div className="button-wrap" onClick={increseFeedback}>
       <button name="good">Good</button>

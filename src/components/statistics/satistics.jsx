@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 
-export const Statistics = ({ ...props }) => {
-  const { good, bad, neutral, total, percentage } = props;
+import { FeedbackContext } from 'components/App';
+
+export const Statistics = () => {
+  const feedbackList = useContext(FeedbackContext);
+
+  const { good, bad, neutral, total, percentage } = feedbackList;
 
   if (total === 0) {
     return (

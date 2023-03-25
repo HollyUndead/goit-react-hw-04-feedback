@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 
 import { Statistics } from './statistics/satistics';
 import { FeedbackOptions } from './feedback/feedbackOptions';
 import './feedback/feedback.css';
+
+export const FeedbackContext = createContext();
 
 export const App = () => {
   const initialState = {
@@ -10,6 +12,7 @@ export const App = () => {
     bad: 0,
     neutral: 0,
   };
+
   const [feedback, setFeedback] = useState(initialState);
 
   const increseFeedback = ev => {
@@ -30,7 +33,6 @@ export const App = () => {
     return Math.round(percentage);
   };
 
-  const { good, bad, neutral } = feedback;
   const total = calulateNewTotal();
   const percentage = calculateNewPercantage(total);
   return (
@@ -45,14 +47,12 @@ export const App = () => {
         color: '#010101',
       }}
     >
-      <FeedbackOptions increseFeedback={increseFeedback} />
-      <Statistics
-        good={good}
-        bad={bad}
-        neutral={neutral}
-        total={total}
-        percentage={percentage}
-      />
+      <FeedbackContext.Provider
+        value={{ ...feedback, total, percentage, increseFeedback }}
+      >
+        <FeedbackOptions />
+        <Statistics />
+      </FeedbackContext.Provider>
     </div>
   );
 };
